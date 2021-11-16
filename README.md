@@ -1,15 +1,24 @@
-# KB-runtime
+# Knowledge Base Runtime
+
 Remember to git clone with the submodule
 ```
-git clone --recurse-submodules -j8
+git clone --recurse-submodules -j8 https://github.com/unipi-smartapp-2021/KB-runtime.git
 ```
 
-Install the dependencies
+### Dependencies
+ROS required tools: 
+```sudo apt install python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential```
+
+also run:
+```sudo rosdep init; rosdep update```
+
+MongoDB dependencies
 ```
 sudo apt-get install python-pymongo mongodb mongodb-dev
 sudo pip install pymongo
 ```
 
+### Useful commands
 Run the mongodb_server
 ```
 rosparam set mongodb_port 62345
@@ -27,7 +36,7 @@ rosbag record -a
 ./ros_readbagfile.py <file.bag> <topics>
 ```
 
-TODO (?):
+### ToDo
 - record images
 - record videso 1fps
 - send all data to the fan service group

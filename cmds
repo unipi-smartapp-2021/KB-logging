@@ -1,6 +1,0 @@
-rostopic list -v
-
-rosbag record <topics>
-rosbag record -a
-
-./ros_readbagfile.py <file.bag> <topics>

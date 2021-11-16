@@ -1,4 +1,5 @@
 devel/
+install/
 logs/
 build/
 bin/
@@ -28,6 +29,9 @@ devel_isolated/
 # eclipse stuff
 .project
 .cproject
+.catkin_workspace
+cmds
+todo
 
 # qcreator stuff
 CMakeLists.txt.user

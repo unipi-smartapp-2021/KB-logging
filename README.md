@@ -18,6 +18,11 @@ sudo apt-get install python-pymongo mongodb mongodb-dev
 sudo pip install pymongo
 ```
 
+### MongoDB setup
+Scripts contained in ```/src/mongobd_store/mongodb_store``` use ```#!/usr/bin/env python``` you probably want to change that to ```#!/usr/bin/env python3```
+
+Run ```./mongodb_setup.sh``` in order to correctly setup your environment for mongodb.
+
 ### Useful commands
 Run the mongodb_server
 ```

@@ -53,6 +53,7 @@ add_message_files(
   ServiceBrake_Status.msg
   EBS_Status.msg
   ASSI_Status.msg
+  FSM.msg
 )
 
 ## Generate services in the 'srv' folder

@@ -14,7 +14,7 @@ also run:
 
 MongoDB dependencies
 ```
-sudo apt-get install python-pymongo mongodb mongodb-dev
+sudo apt-get install python3-pymongo mongodb mongodb-dev
 sudo pip install pymongo
 ```
 

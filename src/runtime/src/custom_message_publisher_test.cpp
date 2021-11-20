@@ -1,11 +1,10 @@
 #include "ros/ros.h"
 #include "runtime/Custom_Message.h"
-#include <sstream>
 
 int main(int argc, char **argv) {
 
     // Initialize using command line parameters and assigning a name to the node
-    ros::init(argc, argv, "assi_publisher");
+    ros::init(argc, argv, "custom_message_publisher");
     
     // Create a node handler
     ros::NodeHandle custom_message_node;
@@ -33,7 +32,6 @@ int main(int argc, char **argv) {
         msg.number = 42;
         msg.check = true;
 
-        ss << msg.number + " " + msg.check;
         // is a macro for printf
         ROS_INFO("%d, %d", msg.number, msg.check);
 

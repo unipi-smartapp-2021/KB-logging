@@ -52,10 +52,6 @@ add_message_files(
   FILES
   ServiceBrake_Status.msg
   EBS_Status.msg
-  ASSI_Status.msg
-  ASSI_Indicator.msg
-  EBS_Indicator.msg
-  ServiceBrake_Indicator.msg
   FSM.msg
   Custom_Message.msg
 )
@@ -212,6 +208,12 @@ include_directories(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
+# Custom Message Example
 add_executable(custom_message_publisher_test src/custom_message_publisher_test.cpp)
 target_link_libraries(custom_message_publisher_test ${catkin_LIBRARIES})
 add_dependencies(custom_message_publisher_test runtime_generate_messages_cpp)
+
+# EBS publisher simulator
+add_executable(ebs_publisher_simulator src/ebs_publisher_simulator.cpp)
+target_link_libraries(ebs_publisher_simulator ${catkin_LIBRARIES})
+add_dependencies(ebs_publisher_simulator runtime_generate_messages_cpp)

@@ -26,7 +26,6 @@ int main(int argc, char **argv) {
     while(ros::ok()) {
         // Create a EBS_Status object
         runtime::EBS_Status msg;
-        std::stringstream ss;
 
         // Data structure to keep the possible states
         uint8_t states[4] = {runtime::EBS_Status::UNKNOWN, runtime::EBS_Status::UNAVAILABLE, runtime::EBS_Status::ARMED, runtime::EBS_Status::ACTIVATED};

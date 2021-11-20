@@ -1,3 +1,5 @@
-uint8 sbs_unavailable=0
-uint8 sbs_available=1
-uint8 sbs_engaged=2
+uint8 UNAVAILABLE = 0
+uint8 AVAILABLE = 1
+uint8 ENGAGED = 2
+
+uint8 state

@@ -1,3 +1,5 @@
+# Enumeration for the state of the EBS
+
 uint8 UNKNOWN = 0
 uint8 UNAVAILABLE = 1
 uint8 ARMED = 2

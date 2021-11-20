@@ -52,6 +52,7 @@ add_message_files(
   FILES
   ServiceBrake_Status.msg
   EBS_Status.msg
+  Gear.msg
   FSM.msg
   Custom_Message.msg
 )
@@ -222,3 +223,8 @@ add_dependencies(ebs_publisher_simulator runtime_generate_messages_cpp)
 add_executable(sb_publisher_simulator src/sb_publisher_simulator.cpp)
 target_link_libraries(sb_publisher_simulator ${catkin_LIBRARIES})
 add_dependencies(sb_publisher_simulator runtime_generate_messages_cpp)
+
+# Gear publisher simulator
+add_executable(gear_publisher_simulator src/gear_publisher_simulator.cpp)
+target_link_libraries(gear_publisher_simulator ${catkin_LIBRARIES})
+add_dependencies(gear_publisher_simulator runtime_generate_messages_cpp)

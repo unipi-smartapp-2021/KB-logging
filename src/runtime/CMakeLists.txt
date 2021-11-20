@@ -217,3 +217,8 @@ add_dependencies(custom_message_publisher_test runtime_generate_messages_cpp)
 add_executable(ebs_publisher_simulator src/ebs_publisher_simulator.cpp)
 target_link_libraries(ebs_publisher_simulator ${catkin_LIBRARIES})
 add_dependencies(ebs_publisher_simulator runtime_generate_messages_cpp)
+
+# ServiceBrake publisher simulator
+add_executable(sb_publisher_simulator src/sb_publisher_simulator.cpp)
+target_link_libraries(sb_publisher_simulator ${catkin_LIBRARIES})
+add_dependencies(sb_publisher_simulator runtime_generate_messages_cpp)

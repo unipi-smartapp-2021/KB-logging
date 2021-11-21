@@ -1,25 +1,22 @@
-// Node that simulates messages for the gear status
+// Node that simulates messages for the Steering Wheel status
 
 #include "ros/ros.h"
-#include "runtime/Gear.h"
-#include <random>
+#include "runtime/SteeringWheel_Status.h"
 
 int main(int argc, char **argv) {
     // Initialize using command line parameters and assigning a name to the node
-    ros::init(argc, argv, "gear_publisher_simulator");
+    ros::init(argc, argv, "steering_wheel_publisher_simulator");
     
     // Create a node handler
-    ros::NodeHandle gear_publisher_simulator_node;
+    ros::NodeHandle sw_publisher_simulator_node;
 
     // create a ros::Publisher object using the node handler
     // In the constructor we specify the topic where to publish the messages and the maximum size of the queue
-    ros::Publisher gear_pub = gear_publisher_simulator_node.advertise<runtime::Gear>("gear_status_simulated", 100);
+    ros::Publisher sw_pub = sw_publisher_simulator_node.advertise<runtime::SteeringWheel_Status>("sw_status_simulated", 100);
 
     // set the frequency
     ros::Rate loop_rate(1);
 
-    int count = 0;
-    uint8_t current_state = 0;
     /* 
         repeat until: 
             1. SIGINT is recieved (Ctrl-C)
@@ -27,30 +24,28 @@ int main(int argc, char **argv) {
             3. ros::shutdown() has been called somewhere
             4. all ros::NodeHandle have been destroyed
     */
+    int count = 0;
+
     while(ros::ok()) {
-        // Create a ServiceBrake_Status object
-        runtime::Gear msg;
+        // Create a SteeringWheel_Status object
+        runtime::SteeringWheel_Status msg;
 
         // Data structure to keep the possible states
-        uint8_t states[5] = {runtime::Gear::GEAR_N, runtime::Gear::GEAR_1, runtime::Gear::GEAR_2, runtime::Gear::GEAR_3, runtime::Gear::GEAR_4};
-        
-        // Shift gear after 3 loops
-        if(count < 3) {
-            ++count;
-        }
-        else {
-            current_state = states[current_state+1];
-            count = 0;
-        }
+        uint8_t states[2] = {runtime::SteeringWheel_Status::UNAVAILABLE, runtime::SteeringWheel_Status::AVAILABLE};
 
         // Set values of the message
-        msg.gear = current_state;
-
+        if (count < 4) {
+            msg.state = states[0];
+            ++count;
+        } else {
+            msg.state = states[1];
+        }
+        
         // is a macro for printf
-        ROS_INFO("%hhu", msg.gear);
+        ROS_INFO("%hhu", msg.state);
 
         // Publish the message
-        gear_pub.publish(msg);
+        sw_pub.publish(msg);
         
         // Call ros::spinOnce() in order to allow the node to also check for any received message from
         // the topics the node is subscribed to

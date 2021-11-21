@@ -1,3 +1,5 @@
+// Node that simulates messages for the EBS status
+
 #include "ros/ros.h"
 #include "runtime/EBS_Status.h"
 #include <random>

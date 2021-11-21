@@ -53,6 +53,7 @@ add_message_files(
   ServiceBrake_Status.msg
   EBS_Status.msg
   Gear.msg
+  SteeringWheel_Status.msg
   FSM.msg
   Custom_Message.msg
 )
@@ -228,3 +229,8 @@ add_dependencies(sb_publisher_simulator runtime_generate_messages_cpp)
 add_executable(gear_publisher_simulator src/gear_publisher_simulator.cpp)
 target_link_libraries(gear_publisher_simulator ${catkin_LIBRARIES})
 add_dependencies(gear_publisher_simulator runtime_generate_messages_cpp)
+
+# SteerinWheel publisher simulator
+add_executable(sw_publisher_simulator src/sw_publisher_simulator.cpp)
+target_link_libraries(sw_publisher_simulator ${catkin_LIBRARIES})
+add_dependencies(sw_publisher_simulator runtime_generate_messages_cpp)

@@ -1,3 +1,5 @@
+// Node that simulates messages for the Service Brake status
+
 #include "ros/ros.h"
 #include "runtime/ServiceBrake_Status.h"
 #include <random>

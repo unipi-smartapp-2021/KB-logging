@@ -54,6 +54,8 @@ add_message_files(
   EBS_Status.msg
   Gear.msg
   SteeringWheel_Status.msg
+  TractiveSystem.msg
+  R2D.msg
   FSM.msg
   Custom_Message.msg
 )
@@ -211,26 +213,36 @@ include_directories(
 # catkin_add_nosetests(test)
 
 # Custom Message Example
-add_executable(custom_message_publisher_test src/custom_message_publisher_test.cpp)
+add_executable(custom_message_publisher_test src/simulators/custom_message_publisher_test.cpp)
 target_link_libraries(custom_message_publisher_test ${catkin_LIBRARIES})
 add_dependencies(custom_message_publisher_test runtime_generate_messages_cpp)
 
 # EBS publisher simulator
-add_executable(ebs_publisher_simulator src/ebs_publisher_simulator.cpp)
+add_executable(ebs_publisher_simulator src/simulators/ebs_publisher_simulator.cpp)
 target_link_libraries(ebs_publisher_simulator ${catkin_LIBRARIES})
 add_dependencies(ebs_publisher_simulator runtime_generate_messages_cpp)
 
 # ServiceBrake publisher simulator
-add_executable(sb_publisher_simulator src/sb_publisher_simulator.cpp)
+add_executable(sb_publisher_simulator src/simulators/sb_publisher_simulator.cpp)
 target_link_libraries(sb_publisher_simulator ${catkin_LIBRARIES})
 add_dependencies(sb_publisher_simulator runtime_generate_messages_cpp)
 
 # Gear publisher simulator
-add_executable(gear_publisher_simulator src/gear_publisher_simulator.cpp)
+add_executable(gear_publisher_simulator src/simulators/gear_publisher_simulator.cpp)
 target_link_libraries(gear_publisher_simulator ${catkin_LIBRARIES})
 add_dependencies(gear_publisher_simulator runtime_generate_messages_cpp)
 
 # SteerinWheel publisher simulator
-add_executable(sw_publisher_simulator src/sw_publisher_simulator.cpp)
+add_executable(sw_publisher_simulator src/simulators/sw_publisher_simulator.cpp)
 target_link_libraries(sw_publisher_simulator ${catkin_LIBRARIES})
 add_dependencies(sw_publisher_simulator runtime_generate_messages_cpp)
+
+# TractiveSystem publisher simulator
+add_executable(ts_publisher_simulator src/simulators/ts_publisher_simulator.cpp)
+target_link_libraries(ts_publisher_simulator ${catkin_LIBRARIES})
+add_dependencies(ts_publisher_simulator runtime_generate_messages_cpp)
+
+# R2D publisher simulator
+add_executable(r2d_publisher_simulator src/simulators/r2d_publisher_simulator.cpp)
+target_link_libraries(r2d_publisher_simulator ${catkin_LIBRARIES})
+add_dependencies(r2d_publisher_simulator runtime_generate_messages_cpp)

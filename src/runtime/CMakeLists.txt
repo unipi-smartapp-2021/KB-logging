@@ -246,3 +246,8 @@ add_dependencies(ts_publisher_simulator runtime_generate_messages_cpp)
 add_executable(r2d_publisher_simulator src/simulators/r2d_publisher_simulator.cpp)
 target_link_libraries(r2d_publisher_simulator ${catkin_LIBRARIES})
 add_dependencies(r2d_publisher_simulator runtime_generate_messages_cpp)
+
+# FSM
+add_executable(fsm src/fsm.cpp)
+target_link_libraries(fsm ${catkin_LIBRARIES})
+add_dependencies(fsm runtime_generate_messages_cpp)

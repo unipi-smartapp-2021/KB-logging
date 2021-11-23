@@ -5,4 +5,4 @@ uint8 UNAVAILABLE = 1
 uint8 ARMED = 2
 uint8 ACTIVATED = 3
 
-uint8 state
+std_msgs/UInt8 state

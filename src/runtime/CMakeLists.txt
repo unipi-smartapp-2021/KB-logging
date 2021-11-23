@@ -254,5 +254,5 @@ target_link_libraries(fsm ${catkin_LIBRARIES})
 add_dependencies(fsm runtime_generate_messages_cpp)
 
 # Bag EBS
-add_executable(rosbag_ebs src/rosbag_ebs.cpp)
-target_link_libraries(rosbag_ebs ${catkin_LIBRARIES})
+add_executable(rosbag_test src/rosbag_test.cpp)
+target_link_libraries(rosbag_test ${catkin_LIBRARIES})

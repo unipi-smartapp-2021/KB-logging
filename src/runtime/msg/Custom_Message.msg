@@ -1,2 +1,2 @@
-int32 number
+std_msgs/UInt8 number
 bool check

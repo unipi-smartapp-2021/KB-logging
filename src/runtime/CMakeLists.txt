@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   message_generation
+  rosbag
 )
 
 ## System dependencies are found with CMake's conventions
@@ -112,7 +113,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES runtime
-CATKIN_DEPENDS message_runtime roscpp rospy std_msgs
+CATKIN_DEPENDS message_runtime roscpp rospy std_msgs rosbag
 #  DEPENDS system_lib
 )
 
@@ -251,3 +252,7 @@ add_dependencies(r2d_publisher_simulator runtime_generate_messages_cpp)
 add_executable(fsm src/fsm.cpp)
 target_link_libraries(fsm ${catkin_LIBRARIES})
 add_dependencies(fsm runtime_generate_messages_cpp)
+
+# Bag EBS
+add_executable(rosbag_test src/rosbag_test.cpp)
+target_link_libraries(rosbag_test ${catkin_LIBRARIES})

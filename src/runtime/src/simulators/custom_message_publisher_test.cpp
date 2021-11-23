@@ -1,5 +1,6 @@
 #include "ros/ros.h"
 #include "runtime/Custom_Message.h"
+#include <std_msgs/UInt8.h>
 
 int main(int argc, char **argv) {
 
@@ -29,11 +30,11 @@ int main(int argc, char **argv) {
         std::stringstream ss;
 
         // Set values of the message
-        msg.number = 42;
+        msg.number.data = 4;
         msg.check = true;
 
         // is a macro for printf
-        ROS_INFO("%d, %d", msg.number, msg.check);
+        ROS_INFO("%d, %d", msg.number.data, msg.check);
 
         // Publish the message
         cm_pub.publish(msg);

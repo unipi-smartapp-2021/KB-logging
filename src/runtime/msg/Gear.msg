@@ -6,4 +6,5 @@ uint8 GEAR_2 = 2
 uint8 GEAR_3 = 3
 uint8 GEAR_4 = 4
 
+uint16 version
 std_msgs/Uint8 gear

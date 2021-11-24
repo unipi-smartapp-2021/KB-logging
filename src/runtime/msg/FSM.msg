@@ -7,4 +7,5 @@ uint8 EMERGENCY = 3
 uint8 FINISH = 4
 uint8 MANUAL = 5
 
+uint16 version
 std_msgs/Uint8 state

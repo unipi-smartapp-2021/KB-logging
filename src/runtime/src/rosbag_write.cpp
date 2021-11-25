@@ -5,20 +5,12 @@
 rosbag::Bag bag;
 
 
-class Listener {
-    public:
-        runtime::Custom_Message value;
-        void callback(const runtime::Custom_Message& msg);
-};
-
-
-void Listener::callback(const runtime::Custom_Message& msg) {
+void callback(const runtime::Custom_Message& msg) {
     ROS_INFO("Storing a message: %d, %d", msg.version, msg.number);
     bag.write("rosbag_test", ros::Time::now(), msg);
 }
 
 int main(int argc, char **argv) {
-    Listener listener;
 
     bag.open("logs/test.bag", rosbag::bagmode::Write);
 
@@ -26,7 +18,7 @@ int main(int argc, char **argv) {
     ros::NodeHandle nh;
 
     // Subscribe transition topics
-    ros::Subscriber sub = nh.subscribe("custom_message", 1, &Listener::callback, &listener);
+    ros::Subscriber sub = nh.subscribe("custom_message", 1, callback);
 
     ros::spin();
 

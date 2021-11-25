@@ -253,6 +253,10 @@ add_executable(fsm src/fsm.cpp)
 target_link_libraries(fsm ${catkin_LIBRARIES})
 add_dependencies(fsm runtime_generate_messages_cpp)
 
-# Bag EBS
-add_executable(rosbag_test src/rosbag_test.cpp)
-target_link_libraries(rosbag_test ${catkin_LIBRARIES})
+# Write Bag
+add_executable(rosbag_write src/rosbag_write.cpp)
+target_link_libraries(rosbag_write ${catkin_LIBRARIES})
+
+# Read Bag
+add_executable(rosbag_read src/rosbag_read.cpp)
+target_link_libraries(rosbag_read ${catkin_LIBRARIES})

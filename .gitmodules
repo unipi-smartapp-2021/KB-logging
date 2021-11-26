@@ -4,3 +4,6 @@
 [submodule "scr/ros-bridge"]
 	path = scr/ros-bridge
 	url = https://github.com/carla-simulator/ros-bridge.git
+[submodule "src/ros-bridge"]
+	path = src/ros-bridge
+	url = https://github.com/carla-simulator/ros-bridge.git

@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
 
     ros::spin();
 
-    bag.close();
+    lidar_bag.close();
 
     return 0;
 }

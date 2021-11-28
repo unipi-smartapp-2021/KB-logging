@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   sensor_msgs
+  carla_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -107,7 +108,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES logging
-CATKIN_DEPENDS rosbag roscpp rospy std_msgs sensor_msgs
+CATKIN_DEPENDS rosbag roscpp rospy std_msgs sensor_msgs carla_msgs
 #  DEPENDS system_lib
 )
 
@@ -210,3 +211,19 @@ include_directories(
 # Lidar Logger
 add_executable(lidar_logger src/lidar_logger.cpp)
 target_link_libraries(lidar_logger ${catkin_LIBRARIES})
+
+# Carla Ego Vehicle Status Logger
+add_executable(ego_vehicle_status_logger src/ego_vehicle_status_logger.cpp)
+target_link_libraries(ego_vehicle_status_logger ${catkin_LIBRARIES})
+
+# Carla Ego Vehicle Info Logger
+add_executable(ego_vehicle_info_logger src/ego_vehicle_info_logger.cpp)
+target_link_libraries(ego_vehicle_info_logger ${catkin_LIBRARIES})
+
+# IMU Logger
+add_executable(imu_logger src/imu_logger.cpp)
+target_link_libraries(imu_logger ${catkin_LIBRARIES})
+
+# Speedometer Logger
+add_executable(speedometer_logger src/speedometer_logger.cpp)
+target_link_libraries(speedometer_logger ${catkin_LIBRARIES})

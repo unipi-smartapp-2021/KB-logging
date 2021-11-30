@@ -14,6 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   sensor_msgs
   carla_msgs
+  backbone
 )
 
 ## System dependencies are found with CMake's conventions
@@ -108,7 +109,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES logging
-CATKIN_DEPENDS rosbag roscpp rospy std_msgs sensor_msgs carla_msgs
+CATKIN_DEPENDS rosbag roscpp rospy std_msgs sensor_msgs carla_msgs backbone
 #  DEPENDS system_lib
 )
 
@@ -208,6 +209,8 @@ include_directories(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
+include_directories(/home/dwarez/Documents/work/KB-runtime/src/KB-backbone/include)
+
 # Lidar Logger
 add_executable(lidar_logger src/lidar_logger.cpp)
 target_link_libraries(lidar_logger ${catkin_LIBRARIES})
@@ -224,6 +227,14 @@ target_link_libraries(ego_vehicle_info_logger ${catkin_LIBRARIES})
 add_executable(imu_logger src/imu_logger.cpp)
 target_link_libraries(imu_logger ${catkin_LIBRARIES})
 
+# IMU Rated Logger
+add_executable(imu_rated_logger src/imu_rated_logger.cpp)
+target_link_libraries(imu_rated_logger ${catkin_LIBRARIES})
+
 # Speedometer Logger
 add_executable(speedometer_logger src/speedometer_logger.cpp)
 target_link_libraries(speedometer_logger ${catkin_LIBRARIES})
+
+# Logger Multiplexer
+add_executable(multiplexer src/multiplexer.cpp)
+target_link_libraries(multiplexer ${catkin_LIBRARIES})

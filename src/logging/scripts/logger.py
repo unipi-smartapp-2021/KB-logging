@@ -36,8 +36,9 @@ def main():
     subscribers = []
 
     for topic, rate in topic_rates:
+        topic = ''.join(topic)
         logger.current_topic = topic
-        message_type = rostopic.get_topic_type(topic)[0]
+        message_type = rostopic.get_topic_type(topic, blocking=True)[0]
         message_class = roslib.message.get_message_class(message_type= message_type)
         RatedTopic(topic, message_class, rate)
         subscribers.append(rospy.Subscriber(f"{topic}Rated{rate}Hz", message_class, callback= lambda x: logger.bag.write(topic, x)))

@@ -1,2 +1,2 @@
-std_msgs/UInt8 number
-bool check
+uint16 version
+uint8 number

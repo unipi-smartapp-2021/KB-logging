@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(runtime)
+project(logging)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -8,11 +8,12 @@ project(runtime)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  rosbag
   roscpp
   rospy
   std_msgs
-  message_generation
-  rosbag
+  sensor_msgs
+  carla_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -48,18 +49,12 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * uncomment the generate_messages entry below
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
-# Generate messages in the 'msg' folder
-add_message_files(
-  FILES
-  ServiceBrake_Status.msg
-  EBS_Status.msg
-  Gear.msg
-  SteeringWheel_Status.msg
-  TractiveSystem.msg
-  R2D.msg
-  FSM.msg
-  Custom_Message.msg
-)
+## Generate messages in the 'msg' folder
+# add_message_files(
+#   FILES
+#   Message1.msg
+#   Message2.msg
+# )
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -75,11 +70,11 @@ add_message_files(
 #   Action2.action
 # )
 
-# Generate added messages and services with any dependencies listed here
-generate_messages(
-  DEPENDENCIES
-  std_msgs
-)
+## Generate added messages and services with any dependencies listed here
+# generate_messages(
+#   DEPENDENCIES
+#   std_msgs
+# )
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -112,8 +107,8 @@ generate_messages(
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES runtime
-CATKIN_DEPENDS message_runtime roscpp rospy std_msgs rosbag
+#  LIBRARIES logging
+CATKIN_DEPENDS rosbag roscpp rospy std_msgs sensor_msgs carla_msgs
 #  DEPENDS system_lib
 )
 
@@ -130,7 +125,7 @@ include_directories(
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/runtime.cpp
+#   src/${PROJECT_NAME}/logging.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -141,7 +136,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/runtime_node.cpp)
+# add_executable(${PROJECT_NAME}_node src/logging_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -205,7 +200,7 @@ include_directories(
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_runtime.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_logging.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
@@ -213,50 +208,22 @@ include_directories(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-# Custom Message Example
-add_executable(custom_message_publisher_test src/simulators/custom_message_publisher_test.cpp)
-target_link_libraries(custom_message_publisher_test ${catkin_LIBRARIES})
-add_dependencies(custom_message_publisher_test runtime_generate_messages_cpp)
+# Lidar Logger
+add_executable(lidar_logger src/lidar_logger.cpp)
+target_link_libraries(lidar_logger ${catkin_LIBRARIES})
 
-# EBS publisher simulator
-add_executable(ebs_publisher_simulator src/simulators/ebs_publisher_simulator.cpp)
-target_link_libraries(ebs_publisher_simulator ${catkin_LIBRARIES})
-add_dependencies(ebs_publisher_simulator runtime_generate_messages_cpp)
+# Carla Ego Vehicle Status Logger
+add_executable(ego_vehicle_status_logger src/ego_vehicle_status_logger.cpp)
+target_link_libraries(ego_vehicle_status_logger ${catkin_LIBRARIES})
 
-# ServiceBrake publisher simulator
-add_executable(sb_publisher_simulator src/simulators/sb_publisher_simulator.cpp)
-target_link_libraries(sb_publisher_simulator ${catkin_LIBRARIES})
-add_dependencies(sb_publisher_simulator runtime_generate_messages_cpp)
+# Carla Ego Vehicle Info Logger
+add_executable(ego_vehicle_info_logger src/ego_vehicle_info_logger.cpp)
+target_link_libraries(ego_vehicle_info_logger ${catkin_LIBRARIES})
 
-# Gear publisher simulator
-add_executable(gear_publisher_simulator src/simulators/gear_publisher_simulator.cpp)
-target_link_libraries(gear_publisher_simulator ${catkin_LIBRARIES})
-add_dependencies(gear_publisher_simulator runtime_generate_messages_cpp)
+# IMU Logger
+add_executable(imu_logger src/imu_logger.cpp)
+target_link_libraries(imu_logger ${catkin_LIBRARIES})
 
-# SteerinWheel publisher simulator
-add_executable(sw_publisher_simulator src/simulators/sw_publisher_simulator.cpp)
-target_link_libraries(sw_publisher_simulator ${catkin_LIBRARIES})
-add_dependencies(sw_publisher_simulator runtime_generate_messages_cpp)
-
-# TractiveSystem publisher simulator
-add_executable(ts_publisher_simulator src/simulators/ts_publisher_simulator.cpp)
-target_link_libraries(ts_publisher_simulator ${catkin_LIBRARIES})
-add_dependencies(ts_publisher_simulator runtime_generate_messages_cpp)
-
-# R2D publisher simulator
-add_executable(r2d_publisher_simulator src/simulators/r2d_publisher_simulator.cpp)
-target_link_libraries(r2d_publisher_simulator ${catkin_LIBRARIES})
-add_dependencies(r2d_publisher_simulator runtime_generate_messages_cpp)
-
-# FSM
-add_executable(fsm src/fsm.cpp)
-target_link_libraries(fsm ${catkin_LIBRARIES})
-add_dependencies(fsm runtime_generate_messages_cpp)
-
-# Write Bag
-add_executable(rosbag_write src/rosbag_write.cpp)
-target_link_libraries(rosbag_write ${catkin_LIBRARIES})
-
-# Read Bag
-add_executable(rosbag_read src/rosbag_read.cpp)
-target_link_libraries(rosbag_read ${catkin_LIBRARIES})
+# Speedometer Logger
+add_executable(speedometer_logger src/speedometer_logger.cpp)
+target_link_libraries(speedometer_logger ${catkin_LIBRARIES})

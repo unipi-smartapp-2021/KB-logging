@@ -6,4 +6,4 @@ uint8 ARMED = 2
 uint8 ACTIVATED = 3
 
 uint16 version
-std_msgs/UInt8 state
+uint8 state

@@ -1,6 +1,5 @@
 #include "ros/ros.h"
 #include "runtime/Custom_Message.h"
-#include <std_msgs/UInt8.h>
 
 int main(int argc, char **argv) {
 
@@ -24,17 +23,18 @@ int main(int argc, char **argv) {
             3. ros::shutdown() has been called somewhere
             4. all ros::NodeHandle have been destroyed
     */
+    uint16_t version = 0;
     while(ros::ok()) {
         // Create a Custom_Message object
         runtime::Custom_Message msg;
-        std::stringstream ss;
 
         // Set values of the message
-        msg.number.data = 4;
-        msg.check = true;
+        msg.number = 4;
+        msg.version = version;
+        version++;
 
         // is a macro for printf
-        ROS_INFO("%d, %d", msg.number.data, msg.check);
+        ROS_INFO("%d, %d", msg.version, msg.number);
 
         // Publish the message
         cm_pub.publish(msg);

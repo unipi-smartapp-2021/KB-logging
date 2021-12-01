@@ -9,11 +9,8 @@ import argparse
 class Logger():
     def __init__(self) -> None:
         super().__init__()
-        self.bag = rosbag.Bag("logs/log.bag", 'w')
-        self.current_topic = ""
-
-    def callback(self, message):
-        self.bag.write(self.current_topic, message)
+        self.bags = {}
+        # self.bag = rosbag.Bag("logs/log.bag", 'w')
 
 
 def build_parser():
@@ -22,27 +19,24 @@ def build_parser():
     parser.add_argument('--rates', type=int, nargs='+', help='Rate to use for each topic')
     return parser.parse_args()
 
-
+logger = Logger()
 
 def main():
     rospy.init_node("simulator_logger")
     args = build_parser() 
 
-    logger = Logger()
-
     assert len(args.topics) == len(args.rates)
 
     topic_rates = zip(args.topics, args.rates)
-    subscribers = []
-
+    
     for topic, rate in topic_rates:
-        logger.current_topic = topic
         message_type = rostopic.get_topic_type(topic, blocking=True)[0]
         message_class = roslib.message.get_message_class(message_type= message_type)
         rates = []
         rates.append(rate)
         RatedTopic(topic, message_class, rates)
-        subscribers.append(rospy.Subscriber(f"{topic}Rated{rate}Hz", message_class, callback= lambda x: logger.bag.write(topic, x)))
+        logger.bags[topic] = rosbag.Bag(f"logs/{topic}_log.bag", 'w')
+        rospy.Subscriber(f"{topic}Rated{rate}Hz", message_class, callback= lambda x: logger.bags[topic].write(topic, x))
         rates.clear()
     print("Allocated all the subscribers")
 
@@ -50,3 +44,5 @@ def main():
 if __name__=="__main__":
     main()
     rospy.spin()
+    for topic, bag in logger.bags.items():
+        bag.close()

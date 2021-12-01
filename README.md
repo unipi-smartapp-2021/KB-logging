@@ -12,27 +12,11 @@ ROS required tools:
 also run:
 ```sudo rosdep init; rosdep update```
 
-MongoDB dependencies
-```
-sudo apt-get install python3-pymongo mongodb mongodb-dev
-sudo pip install pymongo
-```
 
 #### catkin_make will fail the first time you call it, just call it again
 
-### MongoDB setup
-Scripts contained in ```/src/mongobd_store/mongodb_store``` use ```#!/usr/bin/env python``` you probably want to change that to ```#!/usr/bin/env python3```
-
-Run ```chmod +x mongodb_setup.sh; ./mongodb_setup.sh``` in order to correctly setup your environment for mongodb.
 
 ### Useful commands
-Run the mongodb_server
-```
-rosparam set mongodb_port 62345
-rosparam set mongodb_host bob # note that if using multiple machines, 'localhost' is no good
-rosrun mongodb_store mongodb_server.py
-```
-
 Rosbag commands
 ```
 rostopic list -v

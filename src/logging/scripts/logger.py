@@ -40,10 +40,14 @@ def main():
         logger.current_topic = topic
         message_type = rostopic.get_topic_type(topic, blocking=True)[0]
         message_class = roslib.message.get_message_class(message_type= message_type)
-        RatedTopic(topic, message_class, rate)
+        rates = []
+        rates.append(int(rate))
+        RatedTopic(topic, message_class, rates)
         subscribers.append(rospy.Subscriber(f"{topic}Rated{rate}Hz", message_class, callback= lambda x: logger.bag.write(topic, x)))
-
+        rates.clear()
+    print("Allocated all the subscribers")
 
 
 if __name__=="__main__":
-    raise SystemExit(main())
+    main()
+    rospy.spin()

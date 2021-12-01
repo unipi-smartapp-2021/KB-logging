@@ -18,8 +18,8 @@ class Logger():
 
 def build_parser():
     parser = argparse.ArgumentParser(description='Rated logger for simulator\'s data.')
-    parser.add_argument('--topics', metavar='N', type=list, nargs='+', help='List of topics to log')
-    parser.add_argument('--rates', type=list, help='Rate to use for each topic')
+    parser.add_argument('--topics', metavar='N', type=str, nargs='+', help='List of topics to log')
+    parser.add_argument('--rates', type=int, nargs='+', help='Rate to use for each topic')
     return parser.parse_args()
 
 
@@ -36,12 +36,11 @@ def main():
     subscribers = []
 
     for topic, rate in topic_rates:
-        topic = ''.join(topic)
         logger.current_topic = topic
         message_type = rostopic.get_topic_type(topic, blocking=True)[0]
         message_class = roslib.message.get_message_class(message_type= message_type)
         rates = []
-        rates.append(int(rate))
+        rates.append(rate)
         RatedTopic(topic, message_class, rates)
         subscribers.append(rospy.Subscriber(f"{topic}Rated{rate}Hz", message_class, callback= lambda x: logger.bag.write(topic, x)))
         rates.clear()

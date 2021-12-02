@@ -14,6 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   sensor_msgs
   carla_msgs
+  backbone
 )
 
 ## System dependencies are found with CMake's conventions
@@ -108,7 +109,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES logging
-CATKIN_DEPENDS rosbag roscpp rospy std_msgs sensor_msgs carla_msgs
+CATKIN_DEPENDS rosbag roscpp rospy std_msgs sensor_msgs carla_msgs backbone
 #  DEPENDS system_lib
 )
 
@@ -160,12 +161,12 @@ include_directories(
 # all install targets should use catkin DESTINATION variables
 # See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
 
-## Mark executable scripts (Python etc.) for installation
-## in contrast to setup.py, you can choose the destination
-# catkin_install_python(PROGRAMS
-#   scripts/my_python_script
-#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
+# Mark executable scripts (Python etc.) for installation
+# in contrast to setup.py, you can choose the destination
+catkin_install_python(PROGRAMS
+  scripts/logger.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 
 ## Mark executables for installation
 ## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_executables.html
@@ -208,22 +209,29 @@ include_directories(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
+include_directories(/home/dwarez/Documents/work/KB-runtime/src/KB-backbone/include)
+
 # Lidar Logger
-add_executable(lidar_logger src/lidar_logger.cpp)
+add_executable(lidar_logger src/old/lidar_logger.cpp)
 target_link_libraries(lidar_logger ${catkin_LIBRARIES})
 
 # Carla Ego Vehicle Status Logger
-add_executable(ego_vehicle_status_logger src/ego_vehicle_status_logger.cpp)
+add_executable(ego_vehicle_status_logger src/old/ego_vehicle_status_logger.cpp)
 target_link_libraries(ego_vehicle_status_logger ${catkin_LIBRARIES})
 
 # Carla Ego Vehicle Info Logger
-add_executable(ego_vehicle_info_logger src/ego_vehicle_info_logger.cpp)
+add_executable(ego_vehicle_info_logger src/old/ego_vehicle_info_logger.cpp)
 target_link_libraries(ego_vehicle_info_logger ${catkin_LIBRARIES})
 
 # IMU Logger
-add_executable(imu_logger src/imu_logger.cpp)
+add_executable(imu_logger src/old/imu_logger.cpp)
 target_link_libraries(imu_logger ${catkin_LIBRARIES})
 
+# IMU Rated Logger
+add_executable(imu_rated_logger src/old/imu_rated_logger.cpp)
+target_link_libraries(imu_rated_logger ${catkin_LIBRARIES})
+
 # Speedometer Logger
-add_executable(speedometer_logger src/speedometer_logger.cpp)
+add_executable(speedometer_logger src/old/speedometer_logger.cpp)
 target_link_libraries(speedometer_logger ${catkin_LIBRARIES})
+

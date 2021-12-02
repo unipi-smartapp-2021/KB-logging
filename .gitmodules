@@ -1,3 +1,6 @@
 [submodule "src/ros-bridge"]
 	path = src/ros-bridge
 	url = https://github.com/carla-simulator/ros-bridge.git
+[submodule "src/KB-backbone"]
+	path = src/KB-backbone
+	url = https://github.com/unipi-smartapp-2021/KB-backbone.git

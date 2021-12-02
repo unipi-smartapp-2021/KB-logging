@@ -40,8 +40,6 @@ def main():
     bags = {f"{topic}":rosbag.Bag(f"logs/{topic}log.bag", 'w') for topic in args.topics}
     topic_rates = zip(args.topics, args.rates)
 
-    # Create a set of Loggers otherwhise it doesn't work (we don't exactly know why)
-    s: List[Logger] = []
     for topic, rate in topic_rates:
         # Get message type for the topic
         message_type = rostopic.get_topic_type(topic, blocking=True)[0]
@@ -51,7 +49,7 @@ def main():
         rates.append(rate)
         RatedTopic(topic, message_class, rates)
         # Allocate the loggers
-        s.append(Logger(bags[topic],topic,f"{topic}Rated{rate}Hz",message_class))
+        Logger(bags[topic],topic,f"{topic}Rated{rate}Hz",message_class)
         rates.clear()
     print("Allocated all the subscribers") 
         

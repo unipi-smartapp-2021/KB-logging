@@ -1,3 +1,5 @@
+from os import write
+from typing import List
 import rospy
 import rostopic
 import rosbag
@@ -6,43 +8,58 @@ from backbone.rated_topic import RatedTopic
 import argparse
 
 
+# Class used to log data from RatedTopic
 class Logger():
-    def __init__(self) -> None:
+    def __init__(self,bag, log_topic,sub_topic, data_class) -> None:
         super().__init__()
-        self.bags = {}
-        # self.bag = rosbag.Bag("logs/log.bag", 'w')
+        self.bag = bag
+        self.topic = log_topic
+        self.subscriber = rospy.Subscriber(sub_topic,data_class=data_class,callback=self.write_bag)
+
+    def write_bag(self, msg):
+        self.bag.write(self.topic,msg)
 
 
+# Build parser for cli arguments
 def build_parser():
     parser = argparse.ArgumentParser(description='Rated logger for simulator\'s data.')
     parser.add_argument('--topics', metavar='N', type=str, nargs='+', help='List of topics to log')
     parser.add_argument('--rates', type=int, nargs='+', help='Rate to use for each topic')
     return parser.parse_args()
 
-logger = Logger()
-
+bags = None
 def main():
+    global bags
     rospy.init_node("simulator_logger")
     args = build_parser() 
-
+    
+    # Topics and rates must have the same lenght
     assert len(args.topics) == len(args.rates)
 
+    # Create a bag for each topic
+    bags = {f"{topic}":rosbag.Bag(f"logs/{topic}log.bag", 'w') for topic in args.topics}
     topic_rates = zip(args.topics, args.rates)
-    
+
+    # Create a set of Loggers otherwhise it doesn't work (we don't exactly know why)
+    s: List[Logger] = []
     for topic, rate in topic_rates:
+        # Get message type for the topic
         message_type = rostopic.get_topic_type(topic, blocking=True)[0]
         message_class = roslib.message.get_message_class(message_type= message_type)
+        # Rated topic requires a list of rates
         rates = []
         rates.append(rate)
         RatedTopic(topic, message_class, rates)
-        logger.bags[topic] = rosbag.Bag(f"logs/{topic}_log.bag", 'w')
-        rospy.Subscriber(f"{topic}Rated{rate}Hz", message_class, callback= lambda x: logger.bags[topic].write(topic, x))
+        # Allocate the loggers
+        s.append(Logger(bags[topic],topic,f"{topic}Rated{rate}Hz",message_class))
         rates.clear()
-    print("Allocated all the subscribers")
-
+    print("Allocated all the subscribers") 
+        
 
 if __name__=="__main__":
     main()
     rospy.spin()
-    for topic, bag in logger.bags.items():
-        bag.close()
+    # Close the bags in order to save the content
+    for topic, bag in bags.items():
+            bag.close()
+   

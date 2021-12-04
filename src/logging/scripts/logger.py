@@ -6,6 +6,7 @@ import rosbag
 import roslib.message
 from backbone.rated_topic import RatedTopic
 import argparse
+import datetime
 
 
 # Class used to log data from RatedTopic
@@ -14,10 +15,10 @@ class Logger():
         super().__init__()
         self.bag = bag
         self.topic = log_topic
-        self.subscriber = rospy.Subscriber(sub_topic,data_class=data_class,callback=self.write_bag)
+        self.subscriber = rospy.Subscriber(sub_topic, data_class=data_class, callback=self.write_bag)
 
     def write_bag(self, msg):
-        self.bag.write(self.topic,msg)
+        self.bag.write(self.topic, msg)
 
 
 # Build parser for cli arguments
@@ -37,19 +38,20 @@ def main():
     assert len(args.topics) == len(args.rates)
 
     # Create a bag for each topic
-    bags = {f"{topic}":rosbag.Bag(f"logs/{topic}log.bag", 'w') for topic in args.topics}
+    now = datetime.datetime.now()
+    bags = {f"{topic}":rosbag.Bag(f"logs/{now.year}_{now.month}_{now.day}_{now.hour}_{now.minute}_{topic[1:]}.bag", 'w') for topic in args.topics}
     topic_rates = zip(args.topics, args.rates)
 
     for topic, rate in topic_rates:
         # Get message type for the topic
         message_type = rostopic.get_topic_type(topic, blocking=True)[0]
-        message_class = roslib.message.get_message_class(message_type= message_type)
+        message_class = roslib.message.get_message_class(message_type=message_type)
         # Rated topic requires a list of rates
         rates = []
         rates.append(rate)
         RatedTopic(topic, message_class, rates)
         # Allocate the loggers
-        Logger(bags[topic],topic,f"{topic}Rated{rate}Hz",message_class)
+        Logger(bags[topic],topic,f"{topic}Rated{rate}Hz", message_class)
         rates.clear()
     print("Allocated all the subscribers") 
         

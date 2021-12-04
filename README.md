@@ -2,7 +2,8 @@
 
 Git clone recursively with the submodule
 ```
-git clone --recurse-submodules -j8 https://github.com/unipi-smartapp-2021/KB-runtime.git
+git clone --recurse-submodules -j8 https://github.com/unipi-smartapp-2021/KB-logging.git
+cd KB-logging
 git submodule update --init --recursive
 ```
 
